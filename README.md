@@ -1,10 +1,10 @@
 # SteamScout
 
-This bot can help you find and share game information. It works in any chat, just write @steamscoutbot in the text field.
+This bot can help you find and share game information. It works in any chat, just write [@steamscoutbot](https://t.me/steamscoutbot) in the text field.
 
 ## Usage
 
-This Steam search bot automatically works in all your chats and groups, no need to add it anywhere. Simply type @steamscoutbot in any chat, then type your query (without hitting 'send'). This will open a panel with game suggestions so you can choose the right.
+This Steam search bot automatically works in all your chats and groups, no need to add it anywhere. Simply type [@steamscoutbot](https://t.me/steamscoutbot) in any chat, then type your query (without hitting 'send'). This will open a panel with game suggestions so you can choose the right.
 
 ## Environment Vars
 

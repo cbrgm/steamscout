@@ -4,7 +4,7 @@
 import os
 from bot.config import Config
 from bot.bot import GameScout
-from bot.exceptions import BotTokenNotSetException
+from bot.exceptions import BotTokenNotSetException, DatabaseNotSetException
 
 def preflight_checks():
     """
@@ -15,6 +15,25 @@ def preflight_checks():
         error = "Please set a bot token. If you do not possess one, request one from BotFather (@botfather in Telegram)."
         raise BotTokenNotSetException(error)
 
+    if not os.getenv("BOT_DB_HOST"):
+        error = "Please set db host."
+        raise DatabaseNotSetException(error)
+
+    if not os.getenv("BOT_DB_PORT"):
+        error = "Please set db port."
+        raise DatabaseNotSetException(error)
+
+    if not os.getenv("BOT_DB_USER"):
+        error = "Please set db user."
+        raise DatabaseNotSetException(error)
+
+    if not os.getenv("BOT_DB_PASSWORD"):
+        error = "Please set db user password."
+        raise DatabaseNotSetException(error)
+
+    if not os.getenv("BOT_DB_NAME"):
+        error = "Please set db name."
+        raise DatabaseNotSetException(error)
 
 
 if __name__ == "__main__":

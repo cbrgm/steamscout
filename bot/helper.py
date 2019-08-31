@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
+import os
 
 def format_title(item):
     """
@@ -39,3 +40,17 @@ Tags: {}
             """.format(item['app_name'], item['image_url'],  item['release_date'],
                        item['publisher'],item['developers'], tags,  item['description'])
 
+def load_templates():
+    """
+    loads all html templates from the ./bot/templates directory and stores its
+    content into a dictionary. Templates will be rendered by jinja
+    """
+    template_dir = './bot/templates/'
+    templates = {}
+    files = os.listdir(template_dir)
+
+    for template in files:
+        with open(template_dir + template, 'r') as f:
+            templates[template] = f.read()
+
+    return templates

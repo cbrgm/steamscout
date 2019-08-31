@@ -36,6 +36,7 @@ class GameScout:
         self.updater = Updater(config.token, use_context=True)
         self.dp = self.updater.dispatcher
 
+        self.templates = helper.load_templates()
         self.add_commands()
 
     def add_commands(self):
@@ -45,6 +46,7 @@ class GameScout:
         """
         self.dp.add_handler(CommandHandler("start", self.start))
         self.dp.add_handler(CommandHandler("help", self.help))
+        self.dp.add_handler(CommandHandler("imprint", self.imprint))
         self.dp.add_handler(InlineQueryHandler(self.inlinequery))
 
     def start(self, update, context):
@@ -54,15 +56,34 @@ class GameScout:
         :param context:
         :return:
         """
-        update.message.reply_text('Hi!')
-
+        update.message.reply_text(
+            text=self.templates['start.html'],
+            parse_mode=ParseMode.HTML,
+        )
 
     def help(self, update, context):
         """
         Send a message when the command /help is issued.
+        :param update:
+        :param context:
         :return:
         """
-        update.message.reply_text('Help!')
+        update.message.reply_text(
+            text=self.templates['help.html'],
+            parse_mode=ParseMode.HTML,
+        )
+
+    def imprint(self, update, context):
+        """
+        Send a message when the command /imprint is issued.
+        :param update:
+        :param context:
+        :return:
+        """
+        update.message.reply_text(
+            text=self.templates['imprint.html'],
+            parse_mode=ParseMode.HTML,
+        )
 
 
     def inlinequery(self, update, context):
@@ -86,7 +107,7 @@ class GameScout:
                     description=result['description'],
                     input_message_content=InputTextMessageContent(
                         helper.format_message(result),
-                        parse_mode=ParseMode.MARKDOWN,
+                        parse_mode=ParseMode.MARKDOWN.html,
                     )
                 )
             )

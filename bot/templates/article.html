@@ -1,0 +1,10 @@
+<b>{{ data.app_name }}</b>
+🗓 <i>{{ data.release_date }}</i> 🎭 <i>{{ data.review_summary }}</i>
+
+{{ data.description }}
+
+Publisher: {{ data.publisher }}
+Developers: {% for elem in data.developers %} {{ elem }}, {% endfor %}
+
+🏷 <i>{% for elem in data.tags %} {{ elem }}, {% endfor %} ...</i>
+<a href="{{ data.image_url }}">.</a> 

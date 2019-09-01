@@ -2,43 +2,19 @@
 # -*- coding: utf-8 -*-
 
 import os
+from jinja2 import Template
 
-def format_title(item):
+
+def render(template, **kwargs):
     """
-    formats displayed title of an item displayed in the
-    InlineQueryResultArticle
-    :param item:
-    :return string:
+    renders the template with passed args
+    :params template:
+    :params **kwargs:
+    :returns string:
     """
-    item_type = "Game"
-    if item['is_dlc']:
-        item_type = "DLC"
+    tmpl = Template(template)
+    return tmpl.render(kwargs)
 
-    return "{} • {}".format(item_type, item['app_name'])
-
-def format_message(item):
-    """
-    formats the message displayed when clicking on an item displayed in the
-    InlineQueryResultArticle
-    :param item:
-    :return string:
-    """
-    tags = ', '.join(tag for tag in item['tags'])
-    developers = ', '.join(dev for dev in item['developers'])
-
-    return """
-*{}*
-![ ]({})
-_Release(d): {}_
-Publisher: {}
-Developers: {}
-
-Tags: {}
-
-{}
-
-            """.format(item['app_name'], item['image_url'],  item['release_date'],
-                       item['publisher'],item['developers'], tags,  item['description'])
 
 def load_templates():
     """

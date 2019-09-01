@@ -27,7 +27,7 @@ class Database:
         self.connect()
 
         cursor = self.r.table('products').filter(
-                self.r.row["app_name"].match(query)
+            (self.r.row["app_name"].match(query)) & (self.r.row["is_dlc"] == False)
         ).limit(20).run(self.conn)
 
         # build result array

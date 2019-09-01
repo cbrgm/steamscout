@@ -2,18 +2,12 @@
 # -*- coding: utf-8 -*-
 
 import logging
+import itertools as it
 from bot import helper
 from bot.backend import Database
 from telegram import InlineQueryResultArticle, ParseMode, InputTextMessageContent
 from telegram.ext import Updater, InlineQueryHandler, CommandHandler
-from telegram.utils.helpers import escape_markdown
-
-# Enable logging
-logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
-                    level=logging.INFO)
-
-logger = logging.getLogger(__name__)
-
+from telegram import InlineKeyboardButton, InlineKeyboardMarkup
 
 class GameScout:
 
@@ -57,7 +51,7 @@ class GameScout:
         :return:
         """
         update.message.reply_text(
-            text=self.templates['start.html'],
+            helper.render(template=self.templates['start.html']),
             parse_mode=ParseMode.HTML,
         )
 
@@ -69,7 +63,7 @@ class GameScout:
         :return:
         """
         update.message.reply_text(
-            text=self.templates['help.html'],
+            helper.render(template=self.templates['help.html']),
             parse_mode=ParseMode.HTML,
         )
 
@@ -81,7 +75,7 @@ class GameScout:
         :return:
         """
         update.message.reply_text(
-            text=self.templates['imprint.html'],
+            helper.render(template=self.templates['imprint.html']),
             parse_mode=ParseMode.HTML,
         )
 
@@ -97,18 +91,29 @@ class GameScout:
         query = update.inline_query.query
         results = self.db.query_results(query)
 
-        responses = [] 
+        responses = []
         for result in results:
+
+            result['tags'] = it.islice(result['tags'], 5)
             responses.append(
                 InlineQueryResultArticle(
+
                     id=result['id'],
-                    title=helper.format_title(result),
+                    title=result['app_name'],
                     thumb_url=result['image_url'],
                     description=result['description'],
                     input_message_content=InputTextMessageContent(
-                        helper.format_message(result),
-                        parse_mode=ParseMode.MARKDOWN.html,
-                    )
+
+                        helper.render(
+                            template=self.templates['article.html'],
+                            data=result,
+                        ),
+
+                        parse_mode=ParseMode.HTML,
+                    ),
+                 reply_markup =
+                    InlineKeyboardMarkup([[InlineKeyboardButton("Show on Steam",
+                                                                url=result['url'])]])
                 )
             )
 

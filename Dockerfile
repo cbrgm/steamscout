@@ -15,7 +15,9 @@ ENV BOT_TOKEN= \
     BOT_DB_PASSWORD= \
     BOT_VERSION=$VERSION
 
-RUN apk update && rm -rf /var/cache/apk/*
+RUN apk update \
+    && apk add --no-cache build-base libffi-dev openssl-dev \
+    && rm -rf /var/cache/apk/*
 
 WORKDIR /usr/src/app
 

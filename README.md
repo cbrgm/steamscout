@@ -14,6 +14,19 @@ r.db('rethinkdb').table('users').insert({id: 'readonly', password: 'changeme'})
 r.db('steam').table('products').grant('readonly', {read: true, write: false, config: false});
 ```
 
+## Docker / Podman
+
+```
+docker run -itd --name steamscout \
+	-e BOT_TOKEN=changeme \
+	-e BOT_DB_HOST=rethink.cbrgm.net \
+	-e BOT_DB_PORT=28015 \
+	-e BOT_DB_USER=readonly \
+	-e BOT_DB_PASSWORD=changeme \
+	-e BOT_DB_NAME=steam \
+	quay.io/cbrgm/steamscout:latest
+```
+
 ## Environment Vars
 
 * `BOT_TOKEN` : The Telegram bot token

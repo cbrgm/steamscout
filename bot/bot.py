@@ -87,6 +87,9 @@ class GameScout:
         :param context:
         :return:
         """
+        self.logger.info('user "%s" queried for "%s"',
+                         update.inline_query.from_user['username'],
+                         update.inline_query.query)
 
         query = update.inline_query.query
         results = self.db.query_results(query)

@@ -6,6 +6,14 @@ This bot can help you find and share game information. It works in any chat, jus
 
 This Steam search bot automatically works in all your chats and groups, no need to add it anywhere. Simply type [@steamscoutbot](https://t.me/steamscoutbot) in any chat, then type your query (without hitting 'send'). This will open a panel with game suggestions so you can choose the right.
 
+## Security
+
+Add a readonly user to the database:
+```
+r.db('rethinkdb').table('users').insert({id: 'readonly', password: 'changeme'})
+r.db('steam').table('products').grant('readonly', {read: true, write: false, config: false});
+```
+
 ## Environment Vars
 
 * `BOT_TOKEN` : The Telegram bot token
